@@ -1,0 +1,50 @@
+@use '../utils/variables' as *;
+@use '../utils/include-media' as *;
+
+.btn {
+  outline: none;
+  display: inline-block;
+  background-color: transparent;
+  color: $clr-white;
+  font-weight: 600;
+  font-size: 1.5rem;
+  border: 0.2rem solid transparent;
+  padding: 1.2rem 0;
+  text-align: center;
+  width: 22rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-image: linear-gradient(90deg, $clr-pink, $clr-blue) 1;
+  background-image: linear-gradient(90deg, $clr-pink, $clr-blue);
+  flex-shrink: 0;
+
+  &.ghost {
+    background-image: linear-gradient(90deg, transparent, transparent);
+    border-image: linear-gradient(-90deg, $clr-pink, $clr-blue) 1;
+
+    margin-top: 3rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background-image: linear-gradient(-90deg, $clr-pink, $clr-blue);
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    &:hover::after,
+    &:active::after {
+      opacity: 1;
+    }
+
+    @include media('>=mindesk') {
+      margin-left: 4rem;
+    }
+  }
+}

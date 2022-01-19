@@ -1,0 +1,49 @@
+@use './utils/variables' as *;
+@use './utils/include-media' as *;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap');
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  background-color: $clr-white;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+  color: $clr-white;
+  background-color: $clr-black;
+  overflow-x: hidden;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+.row {
+  padding: 0 3rem;
+  max-width: 144rem;
+  margin: 0 auto;
+  @include media('>=mindesk') {
+    padding: 0 6rem;
+  }
+}
