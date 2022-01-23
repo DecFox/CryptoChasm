@@ -1,0 +1,59 @@
+@use '../utils/variables' as *;
+@use '../utils/include-media' as *;
+
+.navbar {
+  display: flex;
+  padding: 2.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include media('>=mindesk') {
+    padding: 2.5rem 6rem;
+  }
+
+  .logo {
+    color: $clr-white;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: 0.1rem;
+
+    span {
+      background: linear-gradient(
+        -45deg,
+        $clr-dark-blue,
+        $clr-green,
+        $clr-blue,
+        $clr-pink
+      );
+      background-size: 400% 400%;
+      animation: gradient 8s ease infinite;
+      background-clip: text;
+      color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    }
+
+    @include media('>=tablet') {
+      font-size: 1.8rem;
+    }
+  }
+
+  .hamburger {
+    i {
+      font-size: 2.5rem;
+    }
+  }
+}
