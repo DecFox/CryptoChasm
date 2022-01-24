@@ -2,10 +2,10 @@
 @use '../utils/include-media' as *;
 
 .header {
-  margin-top: 3rem;
+  margin-top: 10rem;
 
   @include media('>=tablet') {
-    margin-top: 5rem;
+    margin-top: 14rem;
   }
 
   @include media('>=mindesk') {
@@ -30,7 +30,7 @@
     @include media('>=mindesk') {
       display: block;
       flex: 1;
-      height: 40rem;
+      height: 50rem;
     }
 
     @include media('>=desktop') {

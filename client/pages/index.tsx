@@ -6,6 +6,11 @@ import Head from 'next/head';
 import Meta from '../components/utils/Meta';
 import Nav from '../components/Navbar';
 import Header from '../components/Header';
+import Featured from '../components/Featured';
+import { useEffect } from 'react';
+
+// Web3
+import Web3 from 'web3';
 
 // Globals declarations
 const metaData = {
@@ -18,8 +23,9 @@ const Home: NextPage = () => {
     <>
       <Meta {...metaData} />
       <main>
-        <Nav />
+        <Nav pageName="Home" />
         <Header />
+        <Featured />
       </main>
 
       <footer></footer>

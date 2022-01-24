@@ -1,8 +1,13 @@
 // next/react imports
 import Link from 'next/link';
+import { useContext } from 'react';
 
 // components
 import Button from '../components/Button';
+
+// contexts
+
+import { UserContext } from '../contexts/UserContext';
 
 // vendor imports
 
@@ -10,6 +15,8 @@ import Button from '../components/Button';
 import styles from '../styles/components/header.module.scss';
 
 function Header() {
+  const { walletAddress, setWalletAddress } = useContext(UserContext);
+
   return (
     <header className={`row ${styles.header}`}>
       <div className={styles.textBox}>
@@ -25,9 +32,9 @@ function Header() {
           </Button>
         </div>
       </div>
-      <div className={styles.headerImage}>
+      <figure className={styles.headerImage}>
         <img src="/hero-final-min.png" alt="Art hero image" />
-      </div>
+      </figure>
     </header>
   );
 }
