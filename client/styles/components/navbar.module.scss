@@ -2,14 +2,38 @@
 @use '../utils/include-media' as *;
 
 .navbar {
-  display: flex;
   padding: 2.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  z-index: 9999;
+  transition: transform 0.3s ease, background-color 0.3s ease 0.4s;
+
+  &.down {
+    position: fixed;
+    top: 0;
+    transform: translate(-50%, -100%);
+    background-color: $clr-dark-gray;
+  }
+
+  &.up {
+    position: fixed;
+    top: 0;
+    background-color: $clr-dark-gray;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   @include media('>=mindesk') {
-    padding: 2.5rem 6rem;
+    padding: 3rem 0rem;
   }
 
   .logo {
@@ -54,6 +78,159 @@
   .hamburger {
     i {
       font-size: 2.5rem;
+    }
+
+    position: relative;
+    z-index: 99999999999999999;
+
+    @include media('>=tablet') {
+      display: none;
+    }
+  }
+
+  .mainLinks {
+    display: none;
+
+    @include media('>=tablet') {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-flow: row nowrap;
+    }
+
+    & li {
+      font-size: 1.6rem;
+      font-weight: 500;
+      opacity: 0.5;
+      margin-left: 4.5rem;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      position: relative;
+
+      & figure {
+        height: 3.5rem;
+
+        img {
+          height: 100%;
+        }
+      }
+
+      &.active {
+        opacity: 1;
+      }
+
+      &:hover,
+      &:active {
+        opacity: 1;
+      }
+
+      i {
+        font-size: 2.5rem;
+      }
+    }
+
+    & li.profile {
+      opacity: 1;
+      .options {
+        position: absolute;
+        right: 0;
+        background-color: $clr-dark-gray;
+        padding: 2rem 0;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: flex-start;
+        z-index: 9999999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+
+        & li {
+          margin: 0;
+          margin-bottom: 2rem;
+          width: 100%;
+          padding: 0 5rem 0 2rem;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      &:hover .options {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  }
+
+  aside {
+    height: 100vh;
+    width: 100vw;
+    background-color: $clr-black;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    right: -110vw;
+    transition: right 0.4s ease;
+    @include media('>=tablet') {
+      display: none;
+    }
+
+    &.active {
+      right: 0;
+    }
+
+    .asideMain {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+      & figure {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        img {
+          height: 3.5rem;
+        }
+
+        i {
+          font-size: 3rem;
+        }
+
+        p {
+          font-size: 1.8rem;
+          font-weight: 400;
+          margin-left: 1.5rem;
+        }
+      }
+
+      & li {
+        width: 100%;
+        padding: 2rem;
+        font-size: 3rem;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        margin: 1rem 0;
+
+        &:active,
+        &:hover {
+          background-color: $clr-dark-gray;
+        }
+
+        &.active {
+          background-color: $clr-dark-gray;
+        }
+      }
     }
   }
 }
