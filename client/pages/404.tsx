@@ -23,7 +23,7 @@ function custom404() {
   useEffect(() => {
     setTimeout(() => {
       setShowLoader(false);
-    }, 2000);
+    }, 3500);
   }, []);
 
   return (
