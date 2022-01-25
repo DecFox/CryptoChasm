@@ -12,7 +12,7 @@ import (
 )
 
 func GetAllTokens(w http.ResponseWriter, r *http.Request) {
-	tokens := mh.GetTokens(bson.M{})
+	tokens := mh.GetTokens(bson.M{"listed": true})
 	json.NewEncoder(w).Encode(tokens)
 }
 
@@ -40,6 +40,7 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 
 	PresentToken := &db.Token{}
 	token := db.Token{}
+
 	json.NewDecoder(r.Body).Decode(&token)
 
 	token.MintedOn = time.Now()
