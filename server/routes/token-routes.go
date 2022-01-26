@@ -7,8 +7,8 @@ import (
 
 func TokenRoutes(r chi.Router) {
 	r.Get("/all", controllers.GetAllTokens)
-	r.Get("/{tokenhash}", controllers.GetByHash)
+	r.Get("/{metahash}", controllers.GetByHash)
 	r.Post("/", controllers.MintToken)
-	r.Post("/bid/{tokenhash}", controllers.BidOnToken)
-	r.Post("/list/{tokenhash}", controllers.ListToken)
+	r.Post("/bid/{metahash}", controllers.BidOnToken)
+	r.Post("/list/{metahash}", controllers.ListToken)
 }

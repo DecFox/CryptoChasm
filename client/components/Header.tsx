@@ -15,6 +15,8 @@ import { UserContext } from '../contexts/UserContext';
 import styles from '../styles/components/header.module.scss';
 
 function Header() {
+  const { walletAddress, setWalletAddress } = useContext(UserContext);
+
   return (
     <header className={`row ${styles.header}`}>
       <div className={styles.textBox}>

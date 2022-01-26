@@ -6,6 +6,7 @@ import Meta from '../components/utils/Meta';
 import Nav from '../components/Navbar';
 import Header from '../components/Header';
 import Featured from '../components/Featured';
+
 import { useEffect, useState } from 'react';
 
 // Web3
@@ -39,6 +40,7 @@ const Home: NextPage = () => {
           </main>
         </>
       )}
+
     </>
   );
 };

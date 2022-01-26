@@ -11,9 +11,7 @@ import (
 )
 
 func GetByAddress(w http.ResponseWriter, r *http.Request) {
-
 	ethAddress := chi.URLParam(r, "ethaddress")
-
 	if ethAddress == "" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
@@ -21,7 +19,6 @@ func GetByAddress(w http.ResponseWriter, r *http.Request) {
 
 	user := &db.User{}
 	err := mh.GetSingleUser(user, bson.M{"ethAddress": ethAddress})
-
 	if err != nil {
 		http.Error(w, http.StatusText(404), 404)
 		return
@@ -31,12 +28,10 @@ func GetByAddress(w http.ResponseWriter, r *http.Request) {
 }
 
 func SignupUser(w http.ResponseWriter, r *http.Request) {
-
 	newUser := db.User{}
 	json.NewDecoder(r.Body).Decode(&newUser)
 
 	_, err := mh.SignUser(&newUser)
-
 	if err != nil {
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
@@ -47,7 +42,6 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditUser(w http.ResponseWriter, r *http.Request) {
-
 	ethAddress := chi.URLParam(r, "ethaddress")
 
 	if ethAddress == "" {
@@ -60,7 +54,6 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&update)
 
 	_, err := mh.UpdateUser(filter, bson.M{"$set": update})
-
 	if err != nil {
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
