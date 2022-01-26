@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"cryptochasm.com/db"
+	"cryptochasm.com/utils"
 	"github.com/go-chi/chi"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -17,17 +18,15 @@ func GetAllTokens(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetByHash(w http.ResponseWriter, r *http.Request) {
+	metaHash := chi.URLParam(r, "metahash")
 
-	tokenHash := chi.URLParam(r, "tokenhash")
-
-	if tokenHash == "" {
+	if metaHash == "" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 
 	token := &db.Token{}
-	err := mh.GetSingleToken(token, bson.M{"tokenHash": tokenHash})
-
+	err := mh.GetSingleToken(token, bson.M{"metaHash": metaHash})
 	if err != nil {
 		http.Error(w, http.StatusText(404), 404)
 		return
@@ -37,23 +36,53 @@ func GetByHash(w http.ResponseWriter, r *http.Request) {
 }
 
 func MintToken(w http.ResponseWriter, r *http.Request) {
+	formData, err := ProcessMultipart(r)
+	if err != nil {
+		fmt.Println("error processing form")
+		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
+		return
+	}
 
+	// Pin file to IPFS
+	ipfsRsp, err := utils.PinFileToIPFS(formData.File, pinata_key, pinata_secret)
+	if err != nil {
+		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
+		return
+	}
+
+	tokenURI := "ipfs://" + ipfsRsp.IpfsHash
+	tokenMetadata := &utils.IpfsMetadata{
+		Name:        formData.Name,
+		Description: formData.Description,
+		Minter:      formData.Minter,
+		TokenURI:    tokenURI,
+	}
+
+	// Pin metadata to IPFS
+	metaRsp, err := utils.PinJSONToIPFS(tokenMetadata, pinata_key, pinata_secret)
+	if err != nil {
+		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
+		return
+	}
+
+	tokenGateway := "https://gateway.pinata.cloud/ipfs/" + ipfsRsp.IpfsHash
 	PresentToken := &db.Token{}
-	token := db.Token{}
+	token := db.Token{
+		MetaHash:     metaRsp.IpfsHash,
+		Minter:       formData.Minter,
+		MintedOn:     metaRsp.Timestamp,
+		TokenGateway: tokenGateway,
+	}
 
-	json.NewDecoder(r.Body).Decode(&token)
-
-	token.MintedOn = time.Now()
-
-	err := mh.GetSingleToken(PresentToken, bson.M{"tokenHash": token.TokenHash})
-
+	// Check if token exists in DB
+	err = mh.GetSingleToken(PresentToken, bson.M{"metaHash": token.MetaHash})
 	if err == nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 		return
 	}
 
+	// Add token to db
 	_, err = mh.AddToken(&token)
-
 	if err != nil {
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
@@ -64,10 +93,9 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func ListToken(w http.ResponseWriter, r *http.Request) {
+	metaHash := chi.URLParam(r, "metahash")
 
-	tokenHash := chi.URLParam(r, "tokenhash")
-
-	if tokenHash == "" {
+	if metaHash == "" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
@@ -77,10 +105,9 @@ func ListToken(w http.ResponseWriter, r *http.Request) {
 	list.ListingTime = time.Now()
 
 	update := bson.M{"$set": bson.M{"listed": true}, "$push": bson.M{"listing": list}}
-	filter := bson.M{"tokenHash": tokenHash}
+	filter := bson.M{"metaHash": metaHash}
 
 	_, err := mh.UpdateToken(filter, update)
-
 	if err != nil {
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
@@ -91,10 +118,9 @@ func ListToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func BidOnToken(w http.ResponseWriter, r *http.Request) {
+	metaHash := chi.URLParam(r, "metahash")
 
-	tokenHash := chi.URLParam(r, "tokenhash")
-
-	if tokenHash == "" {
+	if metaHash == "" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
@@ -104,10 +130,9 @@ func BidOnToken(w http.ResponseWriter, r *http.Request) {
 	bid.TimeOfBid = time.Now()
 
 	update := bson.M{"$push": bson.M{"bids": bid}}
-	filter := bson.M{"tokenHash": tokenHash, "listed": true}
+	filter := bson.M{"metaHash": metaHash, "listed": true}
 
 	_, err := mh.UpdateToken(filter, update)
-
 	if err != nil {
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
