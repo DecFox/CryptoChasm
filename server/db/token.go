@@ -21,6 +21,8 @@ type Token struct {
 	Listed       bool      `json:"listed" bson:"listed"`
 	Minter       string    `json:"minter" bson:"minter,omitempty"`
 	MintedOn     time.Time `json:"mintedOn" bson:"mintedOn"`
+	Name         string    `json:"name" bson:"name"`
+	Description  string    `json:"description" bson:"description"`
 	Owners       []string  `json:"owners" bson:"owners,omitempty"`
 	Royalty      []float64 `json:"royalty" bson:"royalty,omitempty"`
 	Bids         []Bid     `json:"bids" bson:"bids,omitempty"`
