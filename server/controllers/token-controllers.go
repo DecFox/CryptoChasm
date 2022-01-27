@@ -71,6 +71,8 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 		MetaHash:     metaRsp.IpfsHash,
 		Minter:       formData.Minter,
 		MintedOn:     metaRsp.Timestamp,
+		Name:         formData.Name,
+		Description:  formData.Description,
 		TokenGateway: tokenGateway,
 	}
 
