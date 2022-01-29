@@ -15,7 +15,6 @@ module.exports = {
   networks: {
     localhost: {
       url: 'HTTP://127.0.0.1:7545',
-      from: '0x8a4C8185B8D32369Ebc707D688A2F9B5f462DB94',
     },
   },
 };

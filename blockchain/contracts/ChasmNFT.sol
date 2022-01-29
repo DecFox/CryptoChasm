@@ -68,15 +68,16 @@ contract ChasmNFT is ERC721URIStorage, Ownable {
         require(price > 0, "This token is not for sale.");
         require(msg.value == price, "Incorrect price value.");
 
-
         address seller = ownerOf(_tokenId);
         _transfer(seller, msg.sender, _tokenId);
         tokenIdToPrice[_tokenId] = 0; // not for sale anymore
+
 
         payable(_nftCreator).transfer(_royalty); // tranfer the royalty to the original owner of the nft
         payable(seller).transfer(msg.value - (_royalty + _compensationFee)); // tranfer eth to seller
 
         emit NftBought(seller, msg.sender, msg.value);
+        emit SaleEnded(_tokenId);
     }
 
     // The below function tranfers amount from the money held by the conract to the owner's wallet
