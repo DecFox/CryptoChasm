@@ -17,7 +17,7 @@ type MongoHandler struct {
 
 var (
 	defaultDB = "CryptoChasm"
-	TimeOut   = time.Second * 10
+	TimeOut   = time.Second * 10 
 )
 
 var (
@@ -28,8 +28,9 @@ var (
 
 func NewHandler(address string) *MongoHandler {
 
-	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
-	defer cancel()
+	ctx := context.Background()
+	// defer cancel()
+	time.Sleep(time.Second * 10 )
 
 	cl, err := mongo.Connect(ctx, options.Client().ApplyURI(address))
 	if err != nil {

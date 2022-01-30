@@ -13,13 +13,15 @@ contract ChasmNFT is ERC721URIStorage, Ownable {
 
     event NftBought(address _seller, address _buyer, uint256 _price);
     event AmountWithdrawn(address _drawer, uint256 _amount);
-    event Minted(address _recipient, string _tokenURI);
+    event Minted(address _recipient, string _tokenURI, uint256 newItemId);
+    event SaleStarted(uint256 _tokenId, uint256 _price);
+    event SaleEnded(uint256 _tokenId);
 
     Counters.Counter private _tokenIds;
-    address private contractOwner;
+    address public contractOwner;
     
     mapping(uint256 => uint256) public tokenIdToPrice;
-    mapping(string => uint32) public nftCount; 
+    mapping(string => uint256) public nftCount; 
     // mapping(uint256 => address) public tokenIdToCreator; // keep record of the person who created/minted the nft
 
     constructor() ERC721("Crypto Chasm","CHSM"){
@@ -35,9 +37,10 @@ contract ChasmNFT is ERC721URIStorage, Ownable {
         uint256 newItemId = _tokenIds.current(); 
         _safeMint(_recipient, newItemId);
         _setTokenURI(newItemId, _tokenURI);
+        
 
         //tokenIdToCreator[newItemId] = msg.sender;
-        emit Minted(_recipient, _tokenURI);
+        emit Minted(_recipient, _tokenURI, newItemId);
         return newItemId;
     }
 
@@ -47,13 +50,15 @@ contract ChasmNFT is ERC721URIStorage, Ownable {
         require(_price > 0, "Price cannot be zero");
         require(msg.sender == ownerOf(_tokenId), "Not the owner of this token.");
         tokenIdToPrice[_tokenId] = _price;
-    }
+        emit SaleStarted(_tokenId, _price);
+    }   
 
     // The below function allows the owner of the Token to end its sale
 
     function stopSale(uint256 _tokenId) external {
         require(msg.sender == ownerOf(_tokenId), "Not the owner of this token.");
         tokenIdToPrice[_tokenId] = 0;
+        emit SaleEnded(_tokenId);
     }   
 
     // The below functionn allows users to buy NFTs
@@ -63,15 +68,16 @@ contract ChasmNFT is ERC721URIStorage, Ownable {
         require(price > 0, "This token is not for sale.");
         require(msg.value == price, "Incorrect price value.");
 
-
         address seller = ownerOf(_tokenId);
         _transfer(seller, msg.sender, _tokenId);
         tokenIdToPrice[_tokenId] = 0; // not for sale anymore
+
 
         payable(_nftCreator).transfer(_royalty); // tranfer the royalty to the original owner of the nft
         payable(seller).transfer(msg.value - (_royalty + _compensationFee)); // tranfer eth to seller
 
         emit NftBought(seller, msg.sender, msg.value);
+        emit SaleEnded(_tokenId);
     }
 
     // The below function tranfers amount from the money held by the conract to the owner's wallet
