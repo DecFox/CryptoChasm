@@ -14,7 +14,7 @@ type response struct {
 
 var (
 	mongoDbConnection string
-	mh                db.MongoHandler
+	mh                *db.MongoHandler
 	pinata_key        string
 	pinata_secret     string
 )
@@ -23,7 +23,7 @@ func gogdotenv(key string) string {
 	err := godotenv.Load("../.env")
 
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Fatal("Error loading .env file")
 	}
 
 	return os.Getenv(key)
@@ -34,5 +34,5 @@ func ControllersInit() {
 	pinata_secret = gogdotenv("PINATA_API_SECRET")
 
 	mongoDbConnection = gogdotenv("DB_URI")
-	mh = *db.NewHandler(mongoDbConnection)
+	mh, _ = db.NewHandler(mongoDbConnection)
 }
