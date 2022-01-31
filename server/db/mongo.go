@@ -26,20 +26,22 @@ var (
 	userCollection  *mongo.Collection
 )
 
-func NewHandler(address string) *MongoHandler {
+func NewHandler(address string) (*MongoHandler, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
 	defer cancel()
 
 	cl, err := mongo.Connect(ctx, options.Client().ApplyURI(address))
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
+		return nil, err
 	}
 
 	err = cl.Ping(ctx, readpref.Primary())
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return nil, err
 	} else {
 		log.Println("Connected to MongoDB")
 	}
@@ -52,5 +54,5 @@ func NewHandler(address string) *MongoHandler {
 	userCollection = mh.client.Database(mh.database).Collection("users")
 	tokenCollection = mh.client.Database(mh.database).Collection("tokens")
 
-	return mh
+	return mh, nil
 }
