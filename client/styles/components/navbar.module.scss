@@ -2,14 +2,13 @@
 @use '../utils/include-media' as *;
 
 .navbar {
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 0rem;
   width: 100%;
   background-color: transparent;
   position: fixed;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
-
 
   z-index: 99;
   transition: transform 0.3s ease, background-color 0.3s ease 0.4s;
@@ -44,13 +43,7 @@
     letter-spacing: 0.1rem;
 
     span {
-      background: linear-gradient(
-        -45deg,
-        $clr-dark-blue,
-        $clr-green,
-        $clr-blue,
-        $clr-pink
-      );
+      background: linear-gradient(-45deg, $clr-dark-blue, $clr-green, $clr-blue, $clr-pink);
       background-size: 400% 400%;
       animation: gradient 8s ease infinite;
       background-clip: text;

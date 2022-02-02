@@ -1,13 +1,13 @@
 // react/next imports
 import type { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 
 // components
 import Meta from '../components/utils/Meta';
 import Nav from '../components/Navbar';
 import Header from '../components/Header';
 import Featured from '../components/Featured';
-
-import { useEffect, useState } from 'react';
+import Latest from '../components/Latest';
 
 // Web3
 import Web3 from 'web3';
@@ -37,10 +37,10 @@ const Home: NextPage = () => {
             <Nav pageName="Home" />
             <Header />
             <Featured />
+            <Latest />
           </main>
         </>
       )}
-
     </>
   );
 };
