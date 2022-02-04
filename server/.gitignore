@@ -1,3 +1,6 @@
 # server
 .env
 /mock-data
+/blockchain
+/go-utils
+/contract

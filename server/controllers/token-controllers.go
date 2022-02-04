@@ -43,14 +43,14 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Pin file to IPFS
-	ipfsRsp, err := utils.PinFileToIPFS(formData.File, pinata_key, pinata_secret)
+	resp, err := cldh.UploadToken(formData.File, formData.FileHead, formData.Minter)
 	if err != nil {
+		fmt.Println("error processing form")
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
 	}
 
-	tokenURI := "ipfs://" + ipfsRsp.IpfsHash
+	tokenURI := resp.SecureURL
 	tokenMetadata := &utils.IpfsMetadata{
 		Name:        formData.Name,
 		Description: formData.Description,
@@ -65,7 +65,6 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tokenGateway := "https://gateway.pinata.cloud/ipfs/" + ipfsRsp.IpfsHash
 	PresentToken := &db.Token{}
 	token := db.Token{
 		MetaHash:     metaRsp.IpfsHash,
@@ -73,7 +72,7 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 		MintedOn:     metaRsp.Timestamp,
 		Name:         formData.Name,
 		Description:  formData.Description,
-		TokenGateway: tokenGateway,
+		TokenGateway: tokenURI,
 	}
 
 	// Check if token exists in DB
