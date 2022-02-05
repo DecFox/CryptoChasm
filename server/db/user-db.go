@@ -7,7 +7,6 @@ import (
 )
 
 func (mh *MongoHandler) GetSingleUser(user *User, filter interface{}) error {
-
 	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
 	defer cancel()
 
@@ -17,7 +16,6 @@ func (mh *MongoHandler) GetSingleUser(user *User, filter interface{}) error {
 }
 
 func (mh *MongoHandler) SignUser(user *User) (*mongo.InsertOneResult, error) {
-
 	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
 	defer cancel()
 
@@ -27,7 +25,6 @@ func (mh *MongoHandler) SignUser(user *User) (*mongo.InsertOneResult, error) {
 }
 
 func (mh *MongoHandler) UpdateUser(filter interface{}, update interface{}) (*mongo.UpdateResult, error) {
-
 	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
 	defer cancel()
 
