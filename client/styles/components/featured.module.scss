@@ -27,6 +27,7 @@
     }
 
     @include media('>=tablet') {
+      margin-top: 6rem;
       grid-template-areas:
         'main one '
         'main two'

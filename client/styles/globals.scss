@@ -12,8 +12,8 @@
 
 html {
   font-size: 62.5%;
+  overflow-y: scroll;
   overflow-x: hidden;
-  width: 100%;
 }
 
 body {
@@ -26,7 +26,7 @@ body {
   text-rendering: optimizeLegibility;
   color: $clr-white;
   background-color: $clr-black;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 
 /* width */
@@ -74,6 +74,26 @@ section {
 
   @include media('>=mindesk') {
     margin: 15rem auto !important;
+  }
+}
+
+footer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #272727;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: $clr-white;
+  font-size: 1.5rem;
+  font-weight: 400;
+  opacity: 0.8;
+
+  @include media('>=mindesk') {
+    padding: 5rem 1rem;
+    margin-top: 8rem;
+    font-size: 2rem;
   }
 }
 

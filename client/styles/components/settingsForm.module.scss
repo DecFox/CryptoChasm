@@ -1,0 +1,116 @@
+@use '../utils/variables' as *;
+@use '../utils/include-media' as *;
+
+.form {
+  margin: 4rem 0;
+
+  .input_container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 3.5rem auto;
+    width: 95%;
+
+    @include media('>=mindesk') {
+      width: 70%;
+      margin: 5rem 0;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+
+    input {
+      background-color: transparent;
+      width: 100%;
+      padding: 1.5rem 0;
+      border: none;
+      outline: none;
+      border-bottom: 0.1rem solid rgba($color: #fff, $alpha: 0.3);
+      font-weight: 500;
+      font-size: 1.5rem;
+      color: $clr-white;
+      transition: border-bottom 0.3s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include media('>=mindesk') {
+        padding: 1.8rem 0;
+        font-size: 1.8rem;
+      }
+
+      &:active,
+      &:focus,
+      &:valid:not(:placeholder-shown) {
+        border-bottom: 0.1rem solid rgba($clr-white, 1);
+      }
+
+      &:not(:focus):not(:placeholder-shown):invalid {
+        border-bottom: 0.1rem solid rgba(rgb(245, 93, 93), 1);
+      }
+
+      &::placeholder {
+        color: $clr-white;
+        opacity: 0.5;
+        font-style: italic;
+        font-family: 'Poppins', sans-serif;
+      }
+    }
+
+    textarea {
+      padding: 1.5rem 0rem;
+      font-size: 1.5rem;
+      border: none;
+      border-bottom: 0.1rem solid rgba($color: #fff, $alpha: 0.3);
+      outline: none;
+      color: $clr-white;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      width: 100% !important;
+      min-height: 7rem;
+      transition: border-bottom 0.3s ease-in;
+      background-color: transparent;
+
+      @include media('>=mindesk') {
+        padding: 1.8rem 0;
+        font-size: 1.8rem;
+      }
+
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+      }
+
+      &:active,
+      &:focus,
+      &:valid:not(:placeholder-shown) {
+        border-bottom: 0.1rem solid rgba($clr-white, 1);
+      }
+
+      &:not(:focus):not(:placeholder-shown):invalid {
+        border-bottom: 2px solid rgba(rgb(245, 93, 93), 1);
+      }
+
+      &::placeholder {
+        color: $clr-white;
+        opacity: 0.5;
+        font-style: italic;
+        font-family: 'Poppins', sans-serif;
+      }
+    }
+  }
+
+  .btn_container {
+    display: flex;
+    justify-content: center;
+
+    @include media('>=mindesk') {
+      justify-content: flex-start;
+    }
+    button {
+      margin: 0;
+    }
+  }
+}
