@@ -16,13 +16,25 @@ function Button({
   children: string | ReactElement;
   href: string;
 }) {
-  return (
-    <Link href={href} passHref>
+  if (type === 'submit') {
+    return (
       <button className={`${styles.btn} ${styles[modifier]}`} type={type}>
         {children}
       </button>
-    </Link>
-  );
+    );
+  } else {
+    return (
+      <Link href={href} passHref>
+        <button
+          className={`${styles.btn} ${styles[modifier]}`}
+          type={type}
+          onClick={(e) => e.preventDefault()}
+        >
+          {children}
+        </button>
+      </Link>
+    );
+  }
 }
 
 export default Button;

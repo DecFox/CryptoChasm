@@ -1,0 +1,32 @@
+@use './utils/variables' as *;
+@use './utils/mixins' as *;
+@use './utils/include-media' as *;
+
+.settings {
+  margin-top: 10rem;
+
+  @include media('>=tablet') {
+    margin-top: 14rem;
+  }
+
+  h1 {
+    @include heading-text;
+
+    @include media('>=mindesk') {
+      text-align: left;
+    }
+  }
+
+  p {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-top: 1rem;
+    opacity: 0.5;
+
+    @include media('>=mindesk') {
+      text-align: left;
+      font-size: 2rem;
+      width: 60ch;
+    }
+  }
+}
