@@ -25,11 +25,7 @@ function Button({
   } else {
     return (
       <Link href={href} passHref>
-        <button
-          className={`${styles.btn} ${styles[modifier]}`}
-          type={type}
-          onClick={(e) => e.preventDefault()}
-        >
+        <button className={`${styles.btn} ${styles[modifier]}`} type={type}>
           {children}
         </button>
       </Link>
