@@ -25,7 +25,7 @@ function Header() {
           <Button type="button" modifier="" href="/">
             Explore the Depths
           </Button>
-          <Button type="button" modifier="ghost" href="/">
+          <Button type="button" modifier="ghost" href="/createNFT">
             Create
           </Button>
         </div>

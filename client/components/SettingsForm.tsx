@@ -11,14 +11,25 @@ import { UserContext } from '../contexts/UserContext';
 // vendor imports
 
 // styles
-import styles from '../styles/components/settingsForm.module.scss';
+import styles from '../styles/components/form.module.scss';
 
 function SettingsForm() {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [email, setEmail] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+    formData.append('name', name);
+    formData.append('bio', bio);
+    formData.append('email', email);
+
+    // Post Logic
+  };
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
       <div className={styles.input_container}>
         <label htmlFor="name">Display Name</label>
         <input

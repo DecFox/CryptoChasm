@@ -17,9 +17,15 @@
       margin: 5rem 0;
     }
 
+    p {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
     label {
       font-weight: 600;
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
 
     input {
@@ -30,7 +36,7 @@
       outline: none;
       border-bottom: 0.1rem solid rgba($color: #fff, $alpha: 0.3);
       font-weight: 500;
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       color: $clr-white;
       transition: border-bottom 0.3s ease;
       white-space: nowrap;
@@ -57,6 +63,50 @@
         opacity: 0.5;
         font-style: italic;
         font-family: 'Poppins', sans-serif;
+      }
+    }
+
+    input[type='file'] {
+      display: none;
+    }
+
+    label.image_label {
+      height: 25rem;
+      width: 25rem;
+      border: 0.2rem solid rgba($clr-white, 1);
+      opacity: 0.6;
+      border-style: dashed;
+      font-size: 4rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      position: relative;
+
+      img {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        z-index: 10;
+        display: none;
+      }
+
+      &:hover,
+      &:active {
+        opacity: 1;
+      }
+
+      &.invalid {
+        border: 0.2rem solid rgba(rgb(245, 93, 93), 1);
+        border-style: dashed;
+      }
+
+      &:valid {
+        border: 0.2rem solid rgba($clr-white, 1);
       }
     }
 
