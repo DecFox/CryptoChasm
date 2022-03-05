@@ -24,11 +24,14 @@ func (mh *MongoHandler) SignUser(user *User) (*mongo.InsertOneResult, error) {
 	return result, err
 }
 
-func (mh *MongoHandler) UpdateUser(filter interface{}, update interface{}) (*mongo.UpdateResult, error) {
+func (mh *MongoHandler) UpdateUser(filter interface{}, update interface{}) (*mongo.SingleResult, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
 	defer cancel()
 
-	result, err := userCollection.UpdateOne(ctx, filter, update)
+	result := userCollection.FindOneAndUpdate(ctx, filter, update)
+	if result.Err() != nil {
+		return nil, result.Err()
+	}
 
-	return result, err
+	return result, nil
 }

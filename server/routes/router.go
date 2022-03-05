@@ -9,13 +9,14 @@ import (
 )
 
 func RouterInit() http.Handler {
-
 	controllers.ControllersInit()
 
 	r := chi.NewRouter()
 	r.Use(cors.Default().Handler)
 
+	r.Route("/auth", AuthRoutes)
 	r.Route("/token", TokenRoutes)
 	r.Route("/user", UserRoutes)
+
 	return r
 }

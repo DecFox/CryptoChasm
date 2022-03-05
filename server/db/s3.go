@@ -1,54 +1,71 @@
 package db
 
-// import (
-// 	"bytes"
-// 	"log"
-// 	"mime/multipart"
-// 	"path/filepath"
-// 	"time"
+import (
+	"bytes"
+	"fmt"
+	"log"
+	"mime/multipart"
+	"net/url"
+	"path/filepath"
+	"time"
 
-// 	"github.com/aws/aws-sdk-go/aws"
-// 	"github.com/aws/aws-sdk-go/aws/credentials"
-// 	"github.com/aws/aws-sdk-go/aws/session"
-// 	"github.com/aws/aws-sdk-go/service/s3"
-// )
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+)
 
-// var (
-// 	s3session *session.Session
-// )
+type S3Bucket struct {
+	region    string
+	bucket    string
+	s3session *session.Session
+}
 
-// func Init() (*session.Session, error) {
-// 	s3session, err := session.NewSession(&aws.Config{
-// 		Region:      aws.String("eu-Central-1"),                                        // set aws region here
-// 		Credentials: credentials.NewStaticCredentials("secret id", "secret token", ""), // set credentials here
-// 	})
+func NewS3Session(aws_region string, aws_key string, aws_secret string, bucket_name string) (*S3Bucket, error) {
+	s3session, err := session.NewSession(&aws.Config{
+		Region:      aws.String(aws_region),
+		Credentials: credentials.NewStaticCredentials(aws_key, aws_secret, ""),
+	})
 
-// 	if err != nil {
-// 		log.Fatal(err)
-// 		return nil, err
-// 	}
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	} else {
+		log.Println("AWS session initialised")
+	}
 
-// 	return s3session, nil
-// }
+	s3b := &S3Bucket{
+		region:    aws_region,
+		bucket:    bucket_name,
+		s3session: s3session,
+	}
 
-// func UploadFile(file multipart.File, header *multipart.FileHeader, minter string) error {
-// 	fileSize := header.Size
-// 	buf := make([]byte, fileSize)
-// 	file.Read(buf)
+	return s3b, nil
+}
 
-// 	fileName := "token-" + minter + "-" + time.Now().String() + filepath.Ext(header.Filename)
+func (s3b *S3Bucket) UploadToken(file multipart.File, header *multipart.FileHeader, minter string) (string, error) {
+	fileSize := header.Size
+	buf := make([]byte, fileSize)
+	file.Read(buf)
 
-// 	_, err := s3.New(s3session).PutObject(&s3.PutObjectInput{
-// 		Bucket: aws.String(BUCKET_NAME), // set bucket name here
-// 		Key:    aws.String(fileName),
-// 		ACL:    aws.String("public-read"),
-// 		Body:   bytes.NewReader(buf),
-// 	})
+	filetype := filepath.Ext(header.Filename)[1:]
+	fileName := fmt.Sprintf("token-%s-%s.%s", minter, time.Now().String(), filetype)
 
-// 	if err != nil {
-// 		log.Println(err)
-// 		return err
-// 	}
+	s3session := s3b.s3session
+	_, err := s3.New(s3session).PutObject(&s3.PutObjectInput{
+		Bucket:      aws.String(s3b.bucket), // set bucket name here
+		Key:         aws.String(fileName),
+		ACL:         aws.String("public-read"),
+		ContentType: aws.String("image/" + filetype),
+		Body:        bytes.NewReader(buf),
+	})
 
-// 	return nil
-// }
+	if err != nil {
+		log.Println(err)
+		return "", err
+	}
+
+	tokenURI := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s ", s3b.bucket, s3b.region, url.QueryEscape(fileName))
+
+	return tokenURI, nil
+}

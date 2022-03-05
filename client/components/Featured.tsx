@@ -21,10 +21,10 @@ function Featured() {
   const tokens = [
     {
       metaHash: 'QmcU596cAZgDWiZHjQRzPCDc9pTdJcBq4WxFfk11rUp8rN',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/QmXEyswvvuQdv6AUwmkCdNtsYvaGJkd5eDp369pMkjQFv7',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A35%3A44.040786555+%2B0530+IST+m%3D%2B369.528949953.jpg',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
-      mintedOn: '2022-01-26T11:09:56.394Z',
+      mintedOn: '2022-02-17T08:02:06.904+00:00',
       name: 'Digital Art NFT',
       description: 'This is a test run for minting digital art NFTs',
       owners: null,
@@ -39,7 +39,7 @@ function Featured() {
     },
     {
       metaHash: 'Qmdfd19V77g9uEgaH6PPoPALkZ8wwj3PRXWorcLLG8QF1y',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/QmWamac2VoZ468LNRPoP1z6t4E8Df1KgM7BXBt7GWJDeWG',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A33%3A35.106422589+%2B0530+IST+m%3D%2B240.594585991.jpg',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
       mintedOn: '2022-01-27T04:23:52.403Z',
@@ -61,7 +61,7 @@ function Featured() {
     },
     {
       metaHash: 'QmeG145eyUSb7BuyVC2iunx7jvwBWeuw7jzmuixPrzd8WY',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/QmNZ8YfadK5pJWjhX8QvAbRQXy1onJ8TG3iSjVjSr8pZch',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A33%3A51.314386049+%2B0530+IST+m%3D%2B256.802549468.jpg',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
       mintedOn: '2022-01-27T04:24:15.756Z',
@@ -87,7 +87,7 @@ function Featured() {
     },
     {
       metaHash: 'QmTqke3XkkqWCtW4xSQfUV37EpFLrt7PEpuHz421YwiVoq',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/QmcXtxgTehQZ2w6SZtpr4o5HhVNcm4hzD5g6Wwzq2h9AMs',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A34%3A14.374159605+%2B0530+IST+m%3D%2B279.862323012.jpg',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
       mintedOn: '2022-01-27T04:24:39.153Z',
@@ -105,7 +105,7 @@ function Featured() {
     },
     {
       metaHash: 'QmSCFH2HmJTuDnvstsMZAEak4YvqGwoxvCnhXjQTySnb2u',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/QmYykudfuu1nzHG8tiwt1HNnwzZ7ixvvokuVWsjNo3ngMk',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A34%3A30.244731743+%2B0530+IST+m%3D%2B295.732895142.jpg',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
       mintedOn: '2022-01-27T04:26:08.564Z',
@@ -127,7 +127,7 @@ function Featured() {
     },
     {
       metaHash: 'QmWFbCnkYMstB59YjiwqiosjmPxx69oEyNFCh5ZTuuk2gn',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/Qma4BYAfkGv4eS8nAdLMiuhc5x786U1dJLq1tEGZdRSQfJ',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A34%3A47.439437643+%2B0530+IST+m%3D%2B312.927601053.png',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
       mintedOn: '2022-01-27T04:26:31.394Z',
@@ -149,7 +149,7 @@ function Featured() {
     },
     {
       metaHash: 'QmVat7Cu7MBLweemQpHZNaUuoF1fN5aw1WP9nx3U1Xp6iM',
-      tokenGateway: 'https://gateway.pinata.cloud/ipfs/QmX2r11Fd4tFGshLNqKxT8cTV5NcqrvAQRQnbLUinBrCVg',
+      tokenGateway: 'https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A35%3A26.329470972+%2B0530+IST+m%3D%2B351.817634383.jpeg',
       listed: true,
       minter: '0x0000000000000000000000000000000000000000',
       mintedOn: '2022-01-27T04:26:52.857Z',

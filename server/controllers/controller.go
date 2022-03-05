@@ -8,22 +8,23 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type response struct {
+type Response struct {
 	Status string `json:"status"`
 }
 
 var (
-	mongoDbConnection string
 	mh                *db.MongoHandler
-	cldh              *db.CloudHandler
+	s3b               *db.S3Bucket
+	mongoDbConnection string
 	pinata_key        string
 	pinata_secret     string
-	cld_name          string
-	cld_key           string
-	cld_secret        string
+	aws_region        string
+	aws_key           string
+	aws_secret        string
+	s3_bucket         string
 )
 
-func gogdotenv(key string) string {
+func Dotenv(key string) string {
 	err := godotenv.Load("../.env")
 
 	if err != nil {
@@ -34,15 +35,15 @@ func gogdotenv(key string) string {
 }
 
 func ControllersInit() {
-	pinata_key = gogdotenv("PINATA_API_KEY")
-	pinata_secret = gogdotenv("PINATA_API_SECRET")
+	pinata_key = Dotenv("PINATA_API_KEY")
+	pinata_secret = Dotenv("PINATA_API_SECRET")
 
-	cld_name = gogdotenv("CLD_NAME")
-	cld_key = gogdotenv("CLD_API_KEY")
-	cld_secret = gogdotenv("CLD_API_SECRET")
+	aws_region = Dotenv("AWS_REGION")
+	aws_key = Dotenv("AWS_ACCESS_KEY")
+	aws_secret = Dotenv("AWS_ACCESS_SECRET")
+	s3_bucket = Dotenv("TOKEN_BUCKET_NAME")
+	s3b, _ = db.NewS3Session(aws_region, aws_key, aws_secret, s3_bucket)
 
-	mongoDbConnection = gogdotenv("DB_URI")
+	mongoDbConnection = Dotenv("DB_URI")
 	mh, _ = db.NewMongoHandler(mongoDbConnection)
-
-	cldh, _ = db.NewCloudHandler(cld_name, cld_key, cld_secret)
 }

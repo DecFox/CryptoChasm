@@ -14,15 +14,12 @@ type FormMultipart struct {
 }
 
 func ProcessMultipart(r *http.Request) (FormMultipart, error) {
-
 	err := r.ParseMultipartForm(20 << 20) // max upload size 20 MB
-
 	if err != nil {
 		return FormMultipart{}, err
 	}
 
 	file, fileHead, err := r.FormFile("file")
-
 	if err != nil {
 		return FormMultipart{}, err
 	}

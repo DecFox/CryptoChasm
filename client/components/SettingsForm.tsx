@@ -1,6 +1,7 @@
 // next/react imports
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { json } from 'stream/consumers';
 
 // components
 import Button from '../components/Button';
@@ -9,23 +10,38 @@ import Button from '../components/Button';
 import { UserContext } from '../contexts/UserContext';
 
 // vendor imports
+import useAuthUser from '../Hooks/useAuthUser';
 
 // styles
 import styles from '../styles/components/form.module.scss';
 
 function SettingsForm() {
-  const [name, setName] = useState('');
+  const [username, setName] = useState('');
   const [bio, setBio] = useState('');
   const [email, setEmail] = useState('');
+
+  const { user } = useContext(UserContext);
+
+  useAuthUser();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let formData = new FormData();
-    formData.append('name', name);
-    formData.append('bio', bio);
-    formData.append('email', email);
-
+    let formData = { username, bio, email };
+    
+    fetch('http://localhost:5050/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData) 
+    })
+    .then((response) => response.json())
+    .then((resp) => {
+      console.log(resp);
+    })
+    .catch((err) => { console.log(err); })
+      
     // Post Logic
   };
   return (
@@ -37,7 +53,7 @@ function SettingsForm() {
           name="display-name"
           id="name"
           placeholder="Steve Rogers"
-          value={name}
+          value={username}
           onChange={(e) => {
             setName(e.target.value);
           }}

@@ -12,6 +12,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
+type TokenResponse struct {
+	Status   string   `json:"status"`
+	Response db.Token `json:"response"`
+}
+
 func GetAllTokens(w http.ResponseWriter, r *http.Request) {
 	tokens := mh.GetTokens(bson.M{"listed": true})
 	json.NewEncoder(w).Encode(tokens)
@@ -43,14 +48,13 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := cldh.UploadToken(formData.File, formData.FileHead, formData.Minter)
+	tokenURI, err := s3b.UploadToken(formData.File, formData.FileHead, formData.Minter)
 	if err != nil {
 		fmt.Println("error processing form")
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
 	}
 
-	tokenURI := resp.SecureURL
 	tokenMetadata := &utils.IpfsMetadata{
 		Name:        formData.Name,
 		Description: formData.Description,
@@ -90,7 +94,12 @@ func MintToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response{"Token Minted"})
+	json.NewEncoder(w).Encode(
+		TokenResponse{
+			Status:   "Token Minted",
+			Response: token,
+		},
+	)
 }
 
 func ListToken(w http.ResponseWriter, r *http.Request) {
@@ -115,7 +124,7 @@ func ListToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response{"Token Listed"})
+	json.NewEncoder(w).Encode(Response{"Token Listed"})
 }
 
 func BidOnToken(w http.ResponseWriter, r *http.Request) {
@@ -140,5 +149,5 @@ func BidOnToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response{"Bid placed"})
+	json.NewEncoder(w).Encode(Response{"Bid placed"})
 }

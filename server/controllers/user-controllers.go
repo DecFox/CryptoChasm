@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -9,6 +10,12 @@ import (
 	"github.com/go-chi/chi"
 	"go.mongodb.org/mongo-driver/bson"
 )
+
+type UserResponse struct {
+	Status   string  `json:"status,omitempty"`
+	Response db.User `json:"response,omitempty"`
+	Nonce    string  `json:"nonce,omitempty"`
+}
 
 func GetByAddress(w http.ResponseWriter, r *http.Request) {
 	ethAddress := chi.URLParam(r, "ethaddress")
@@ -38,7 +45,12 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response{"User Created"})
+	json.NewEncoder(w).Encode(
+		UserResponse{
+			Status:   "User Created",
+			Response: newUser,
+		},
+	)
 }
 
 func EditUser(w http.ResponseWriter, r *http.Request) {
@@ -61,4 +73,29 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode("User Updated")
+}
+
+func GetUserNonce(w http.ResponseWriter, r *http.Request) {
+	ethAddress := chi.URLParam(r, "ethaddress")
+	if ethAddress == "" {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	user := &db.User{}
+	err := mh.GetSingleUser(user, bson.M{"ethAddress": ethAddress})
+	if err != nil {
+		http.Error(w, http.StatusText(404), 404)
+		return
+	}
+
+	nonce := user.Nonce
+	nonceHex := hex.EncodeToString([]byte(nonce))
+
+	json.NewEncoder(w).Encode(
+		UserResponse{
+			Status: "nonce received",
+			Nonce:  nonceHex,
+		},
+	)
 }
