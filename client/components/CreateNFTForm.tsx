@@ -67,9 +67,19 @@ function SettingsForm() {
     let formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
-    formData.append('image', image!);
+    formData.append('file', image!);
+
+    formData.append('minter', '0x0000000000000000000000000000000000000000'); // mock ethereum address here
 
     // Post Logic
+
+    fetch('http://localhost:5050/token', {
+      method: 'POST',
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((resp) => { console.log(resp); })
+    .catch((err) => { console.log(err); })
   };
 
   return (

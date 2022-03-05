@@ -19,12 +19,12 @@ type Token struct {
 	MetaHash     string    `json:"metaHash" bson:"metaHash"`
 	TokenGateway string    `json:"tokenGateway" bson:"tokenGateway"`
 	Listed       bool      `json:"listed" bson:"listed"`
-	Minter       string    `json:"minter" bson:"minter,omitempty"`
+	Minter       string    `json:"minter,omitempty" bson:"minter,omitempty"`
 	MintedOn     time.Time `json:"mintedOn" bson:"mintedOn"`
 	Name         string    `json:"name" bson:"name"`
 	Description  string    `json:"description" bson:"description"`
-	Owners       []string  `json:"owners" bson:"owners,omitempty"`
-	Royalty      []float64 `json:"royalty" bson:"royalty,omitempty"`
-	Bids         []Bid     `json:"bids" bson:"bids,omitempty"`
-	Listing      []List    `json:"listing" bson:"listing,omitempty"`
+	Owners       []string  `json:"owners,omitempty" bson:"owners,omitempty"`
+	Royalty      []float64 `json:"royalty,omitempty" bson:"royalty,omitempty"`
+	Bids         []Bid     `json:"bids,omitempty" bson:"bids,omitempty"`
+	Listing      []List    `json:"listing,omitempty" bson:"listing,omitempty"`
 }

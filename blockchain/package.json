@@ -12,6 +12,7 @@
     "hardhat": "^2.8.2"
   },
   "dependencies": {
+    "@opengsn/contracts": "^2.2.6",
     "@openzeppelin/contracts": "^4.4.2"
   }
 }
