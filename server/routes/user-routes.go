@@ -10,4 +10,5 @@ func UserRoutes(r chi.Router) {
 	r.Get("/nonce/{ethaddress}", controllers.GetUserNonce)
 	r.Post("/", controllers.SignupUser)
 	r.Post("/edit/{ethaddress}", controllers.EditUser)
+	r.Post("/init/{ethaddress}", controllers.InitialiseUser)
 }

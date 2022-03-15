@@ -1,8 +1,11 @@
 package controllers
 
 import (
+	"crypto/rand"
+	"math/big"
 	"mime/multipart"
 	"net/http"
+	"strconv"
 )
 
 type FormMultipart struct {
@@ -33,4 +36,15 @@ func ProcessMultipart(r *http.Request) (FormMultipart, error) {
 	}
 
 	return formData, nil
+}
+
+func genNonce() (string, error) {
+	randNonce, err := rand.Int(rand.Reader, big.NewInt(100000))
+	if err != nil {
+		return "", err
+	}
+
+	nonce := int(randNonce.Int64())
+
+	return strconv.Itoa(nonce), nil
 }

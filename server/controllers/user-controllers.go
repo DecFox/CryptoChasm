@@ -34,6 +34,31 @@ func GetByAddress(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+func InitialiseUser(w http.ResponseWriter, r *http.Request) {
+	ethAddress := chi.URLParam(r, "ethaddress")
+
+	if ethAddress == "" {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	filter := bson.M{"ethAddress": ethAddress}
+	nonce, err := genNonce()
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	_, err = mh.InitUser(filter, bson.M{"$set": bson.M{"nonce": nonce}})
+	if err != nil {
+		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode("User Initialised")
+}
+
 func SignupUser(w http.ResponseWriter, r *http.Request) {
 	newUser := db.User{}
 	json.NewDecoder(r.Body).Decode(&newUser)

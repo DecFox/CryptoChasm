@@ -4,7 +4,25 @@ import (
 	"context"
 
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
+
+func (mh *MongoHandler) InitUser(filter interface{}, update interface{}) (*mongo.SingleResult, error) {
+	upsert := true
+	opts := options.FindOneAndUpdateOptions{
+		Upsert: &upsert,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
+	defer cancel()
+
+	result := userCollection.FindOneAndUpdate(ctx, filter, update, &opts)
+	if result.Err() != nil {
+		return nil, result.Err()
+	}
+
+	return result, nil
+}
 
 func (mh *MongoHandler) GetSingleUser(user *User, filter interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), TimeOut)
