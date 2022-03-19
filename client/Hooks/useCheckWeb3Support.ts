@@ -19,6 +19,13 @@ const useCheckWeb3Support = () => {
           user: { walletAddress: account },
         });
 
+        fetch(`http://localhost:5050/user/init/${account}`)
+          .then((resp) => resp.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => { console.log(err); })
+
         window.ethereum.on('accountsChanged', function (accounts: string[]) {
           // Time to reload your interface with accounts[0]!
 
@@ -26,6 +33,13 @@ const useCheckWeb3Support = () => {
             type: 'Set_Wallet_Address',
             user: { walletAddress: accounts[0] },
           });
+
+          fetch(`http://localhost:5050/user/init/${accounts[0]}`)
+          .then((resp) => resp.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => { console.log(err); })
 
           console.log(accounts[0]);
         });

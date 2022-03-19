@@ -8,6 +8,6 @@ import (
 func UserRoutes(r chi.Router) {
 	r.Get("/{ethaddress}", controllers.GetByAddress)
 	r.Get("/nonce/{ethaddress}", controllers.GetUserNonce)
-	r.Post("/", controllers.SignupUser)
 	r.Post("/edit/{ethaddress}", controllers.EditUser)
+	r.Get("/init/{ethaddress}", controllers.InitialiseUser)
 }

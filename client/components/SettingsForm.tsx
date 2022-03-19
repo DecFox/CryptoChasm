@@ -27,9 +27,10 @@ function SettingsForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let formData = { username, bio, email };
+    const { walletAddress } = user;
+    const formData = { username, bio, email };
     
-    fetch('http://localhost:5050/user', {
+    fetch(`http://localhost:5050/user/edit/${walletAddress}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

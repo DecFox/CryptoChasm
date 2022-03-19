@@ -1,13 +1,10 @@
 package controllers
 
 import (
-	"crypto/rand"
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/big"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"cryptochasm.com/db"
@@ -26,18 +23,16 @@ type AuthResponse struct {
 	Status     string `json:"status"`
 }
 
-func genNonce(ethAddress string) (db.User, error) {
+func getNonce(ethAddress string) (db.User, error) {
 	result := db.User{}
 
-	randNonce, err := rand.Int(rand.Reader, big.NewInt(100000))
+	nonce, err := genNonce()
 	if err != nil {
 		return result, err
 	}
 
-	nonce := int(randNonce.Int64())
-
 	filter := bson.M{"ethAddress": ethAddress}
-	updateResult, err := mh.UpdateUser(filter, bson.M{"$set": bson.M{"nonce": strconv.Itoa(nonce)}})
+	updateResult, err := mh.UpdateUser(filter, bson.M{"$set": bson.M{"nonce": nonce}})
 	if err != nil {
 		return result, err
 	}
@@ -63,7 +58,7 @@ func VerifySignature(w http.ResponseWriter, r *http.Request) {
 	}
 	sigByte[64] -= 27
 
-	data, err := genNonce(ethAddress)
+	data, err := getNonce(ethAddress)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
