@@ -34,7 +34,7 @@ const useCheckWeb3Support = () => {
             user: { walletAddress: accounts[0] },
           });
 
-          fetch(`http://localhost:5050/user/init/${account}`)
+          fetch(`http://localhost:5050/user/init/${accounts[0]}`)
           .then((resp) => resp.json())
           .then((data) => {
             console.log(data);
