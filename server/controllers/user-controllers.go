@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"cryptochasm.com/db"
@@ -34,12 +35,25 @@ func GetByAddress(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
-func SignupUser(w http.ResponseWriter, r *http.Request) {
-	newUser := db.User{}
-	json.NewDecoder(r.Body).Decode(&newUser)
+func InitialiseUser(w http.ResponseWriter, r *http.Request) {
+	ethAddress := chi.URLParam(r, "ethaddress")
 
-	_, err := mh.SignUser(&newUser)
+	if ethAddress == "" {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	filter := bson.M{"ethAddress": ethAddress}
+	nonce, err := genNonce()
+
 	if err != nil {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	_, err = mh.InitUser(filter, bson.M{"$set": bson.M{"nonce": nonce}})
+	if err != nil {
+		log.Println(err)
 		http.Error(w, fmt.Sprintln(err), http.StatusBadRequest)
 		return
 	}
@@ -47,8 +61,7 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(
 		UserResponse{
-			Status:   "User Created",
-			Response: newUser,
+			Status: "User Initialised",
 		},
 	)
 }
@@ -72,7 +85,11 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode("User Updated")
+	json.NewEncoder(w).Encode(
+		UserResponse{
+			Status: "User Updated",
+		},
+	)
 }
 
 func GetUserNonce(w http.ResponseWriter, r *http.Request) {
