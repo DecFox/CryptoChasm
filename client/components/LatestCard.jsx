@@ -11,7 +11,7 @@ import styles from '../styles/components/latest.module.scss';
 function LatestCard() {
   return (
     <div className={styles.cardContainer}>
-      <Link href="">
+      <Link href={"/token/address"} passHref>
         <div className={styles.card}>
           <div className={styles.up}>
             <img

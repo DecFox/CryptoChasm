@@ -1,0 +1,205 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+@use '../utils/include-media' as *;
+
+.tokeninfo {
+    margin-top: 10rem;
+    display: flex;
+    justify-content: space-between;
+
+    @include media('<=tablet') {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .art {
+        flex: 1;
+        display: flex;
+        margin-top: 5rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        figure {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+
+            @include media('<=tablet') {
+                width: 80%;
+            }
+            
+            img {
+                width: 100%;
+                object-fit: cover;
+            }
+
+            figcaption {
+                background-color: $clr-dark-gray;
+                height: 4rem;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                a {
+                    margin-right: 10px;
+                    display: block;
+                    font-size: 1.4rem;
+                }
+
+                figure {
+                    height: 1.8rem;
+                    width: 2rem;
+                    margin-right: 1.5rem;
+                }
+            }
+        }
+
+        .description {
+            margin-top: 4rem;
+            width: 70%;
+
+            @include media('<=tablet') {
+                width: 80%;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+                font-weight: 400;
+                color: rgba(256, 256, 256, 0.6);
+            }
+            p {
+                margin-top: 1.4rem;
+                line-height: 2.5rem;
+                font-size: 1.5rem;
+            }
+        }
+    }   
+
+    .info {
+        flex: 1;
+        margin-top: 5rem;
+        display: flex;
+        justify-content: center;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            
+            h1 {
+                font-size: 3.5rem;  
+                font-weight: 500; 
+                
+                @include media('>=mindesk') {
+                    font-size: 4rem;
+                }
+        
+                @include media('<=phone') {
+                    font-size: 2.8rem;
+                    text-align: center;
+                }
+            }
+    
+            h3 {
+                margin-top: 4rem;
+                font-size: 2rem;
+                font-weight: 400;
+                color: rgba(256, 256, 256, 0.6);
+    
+                @include media('<=phone') {
+                    font-size: 1.6rem;
+                }
+            }
+    
+            h2 {
+                margin-top: 1.5rem;
+                font-size: 2.4rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+    
+                figure {
+                    height: 2.8rem;
+                    margin-right: 1.4rem;
+    
+                    svg {
+                        height: 100%;
+                    }
+                }
+    
+                a {
+                    margin-left: 1rem;
+                    font-size: 1.7rem;
+                    color: rgba(256, 256, 256, 0.6);
+                    padding-top: 5px;
+                }
+    
+                span {
+                    margin-left: 1rem;
+                    font-size: 1.7rem;
+                    color: rgba(256, 256, 256, 0.6);
+                }
+    
+                @include media('<=phone') {
+                    font-size: 2rem;
+    
+                    span {
+                        font-size: 1.5rem;
+                    }
+
+                    a {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+    
+            .curr {
+                font-size: 4rem;
+                margin-top: 2.5rem;
+                display: flex;
+                align-items: center;
+    
+                figure {
+                    height: 6rem;
+                    margin-right: 2rem;
+                    margin-left: 1rem;
+                }
+    
+                span {
+                    margin-left: 1rem;
+                    font-size: 1.7rem;
+                    color: rgba(256, 256, 256, 0.6);
+                    display: block;
+                }
+    
+                @include media('<=phone') {
+                    font-size: 3rem;
+    
+                    figure {
+                        height: 4rem;
+                        margin-right: 1.5rem;
+                    }
+                }
+            }
+    
+            button {
+                margin-left: 0;
+                margin-top: 4rem;
+                width: 70%;
+                align-self: center;
+                
+
+                @include media('>=phone') {
+                    width: 27rem;
+                    align-self: flex-start;
+                }
+    
+                @include media('>=mindesk') {
+                    margin-top: 6rem;
+                }
+            }
+        }
+
+        
+    }
+}
