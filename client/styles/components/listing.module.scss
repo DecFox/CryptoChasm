@@ -1,0 +1,116 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+@use '../utils/include-media' as *;
+
+.listing {
+    margin: 10rem 0 8rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include media('>=mindesk') {
+        margin-bottom: 0;
+    }
+
+    .header {
+        width: 65%;
+        overflow-x: auto;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid $clr-white;
+
+        // handle this more gracefully if we can
+        @media only screen and (max-width: 540px) {
+            justify-content: flex-start;
+        }
+
+        &::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .btn {
+            color: rgba(256, 256, 256, 0.6);
+            display: inline-block;
+            background-color: transparent;
+            border: none;
+            margin: 0 4rem;
+            padding: 1.2rem 2rem;
+            font-size: 1.8rem;
+            font-weight: 300;
+            font-family: 'Poppins', sans-serif;
+
+            @include media('<=tablet') {
+                margin: 0 1rem;
+            }
+
+            &:hover {
+                cursor: pointer;
+                color: $clr-white;
+                background-color: $clr-dark-gray;
+            }
+
+            &.active {
+                color: $clr-white;
+                border-bottom: 4px solid $clr-pink;
+            }
+        }
+    }
+
+    .list {
+        overflow-x: scroll;
+        width: 65%;
+
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .fields {
+            display: flex;
+            flex-flow: row nowrap;
+            width: 100%;
+            background-color: $clr-dark-gray;
+            justify-content: space-evenly;
+            padding: 1.5rem 0;
+            margin-top: 0.5rem;
+            
+            h2 {
+                text-align: center;
+                flex: 1;
+                font-size: 1.7rem;
+                font-weight: 400;
+            }
+
+            @include media('<=tablet') {
+                width: 80rem;
+            }
+        }
+    
+        .entry {
+            display: flex;
+            width: 100%;
+            border-bottom: 1px solid $clr-white;
+            justify-content: space-evenly;
+            padding: 2rem 0;
+            margin-top: 0.5rem;
+    
+            h2 {
+                text-align: center;
+                flex: 1;
+                font-size: 1.7rem;
+                font-weight: 400;
+            }
+    
+            a {
+                font-size: 1.7rem;
+                font-weight: 400;
+                text-align: center;
+                flex: 1;
+                display: block;
+            }
+
+            @include media('<=tablet') {
+                width: 80rem;
+            }
+        }
+    }
+}
