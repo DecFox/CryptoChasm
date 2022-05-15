@@ -1,0 +1,55 @@
+{
+    "name": "CryptoApe #1777",
+    "minter": "CryptoApe Co.",
+    "description": "Imperdiet at in interdum mattis. Cursus faucibus pellentesque vitae risus sit commodo vitae. Imperdiet at in interdum mattis. Cursus faucibus pellentesque vitae risus sit commodo vitae.",
+    "txnAddress": "0x4040d1dd5B6f9C864d9db560D72a247c178aE86B",
+    "owner": "Null_Crack",
+    "ownerAddress": "0x29D7d1dd5B6f9C864d9db560D72a247c178aE86B",
+    "bid": 0.54,
+    "bidAddress": "0x34D7d1dd5B689C864d9db560D72a247c178aE86B",
+    "link": "https://cryptotokens.s3.ap-south-1.amazonaws.com/token-0x0000000000000000000000000000000000000000-2022-02-17+13%3A33%3A51.314386049+%2B0530+IST+m%3D%2B256.802549468.jpg",
+    "listing": [
+        {
+            "price": 1,
+            "status": "expired",
+            "lister": "Owner"
+        },
+        {
+            "price": 0.5,
+            "status": "active",
+            "lister": "Owner"
+        }
+    ],
+    "offers": [
+        {
+            "initial": 0.5,
+            "offer": "10%",
+            "final": 0.45,
+            "expiration": "5-02-2002",
+            "status": "expired"
+        }
+    ],
+    "history": [
+        {
+            "event": "Sale",
+            "to": "Recipient",
+            "from": "Owner",
+            "price": 0.43,
+            "txn": "0x1472d1dd5B6f9C864d9db560D72a247c178aE86B"
+        },
+        {
+            "event": "Transfer",
+            "to": "Recipient",
+            "from": "Owner",
+            "price": null,
+            "txn": "0x8900d1dd5B6f9C864d9db560D72a247c178aE86B"
+        },
+        {
+            "event": "Minted",
+            "to": "Minter",
+            "from": "Minter",
+            "price": null,
+            "txn": "0x5230d1dd5B6f9C864d9db560D72a247c178aE86B"
+        }
+    ]
+}
