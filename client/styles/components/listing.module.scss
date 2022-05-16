@@ -20,8 +20,16 @@
         border-bottom: 1px solid $clr-white;
 
         // handle this more gracefully if we can
-        @media only screen and (max-width: 540px) {
+        @media only screen and (max-width: 450px) {
             justify-content: flex-start;
+        }
+        
+        @include media('<=mindesk') {
+            width: 80%;
+        }
+
+        @include media('<=phone') {
+            width: 90%;
         }
 
         &::-webkit-scrollbar {
@@ -62,6 +70,14 @@
 
         &::-webkit-scrollbar {
             height: 4px;
+        }
+
+        @include media('<=mindesk') {
+            width: 80%;
+        }
+
+        @include media('<=phone') {
+            width: 90%;
         }
 
         .fields {
