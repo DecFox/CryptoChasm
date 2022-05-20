@@ -1,15 +1,40 @@
-# Basic Sample Hardhat Project
+# GSN with hardhat
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Setup
+Install dependencies.
 
-Try running some of the following tasks:
+```
+yarn
+```
 
-```shell
-npx hardhat accounts
+## Compile
+
+```
 npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+```
+
+## Run ganache
+
+```
+ganache
+```
+
+## Run GSN
+
+```
+npx gsn start -n http://localhost:7545
+```
+
+## Deploy
+
+```
+
+npx hardhat run scripts/deploy.js --network localhost
+
+```
+
+## Fund Paymaster
+
+```
+npx hardhat run scripts/fund.js --network localhost
 ```

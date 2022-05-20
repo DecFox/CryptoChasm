@@ -14,7 +14,7 @@ module.exports = {
   solidity: '0.8.4',
   networks: {
     localhost: {
-      url: 'HTTP://127.0.0.1:8080',
+      url: 'HTTP://127.0.0.1:7545',
     },
   },
 };
